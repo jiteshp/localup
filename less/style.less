@@ -1,0 +1,849 @@
+/*!
+ *	Theme Name:			LocalUp
+ *	Theme URI:			https://github.com/jiteshp/localup/
+ *	Version:			1.0.0
+ *	Author:				Jitesh Patil
+ *	Author URI:			http://devamigo.com/
+ *	Description:		A clean WordPress theme for small, local businesses. 
+ *	
+ *	GitHub Theme URI: 	https://github.com/jiteshp/localup/
+ *
+ *	Copyright 2014 Devamigo
+ *	
+ *	Licensed under the Apache License, Version 2.0 (the "License");
+ *	you may not use this file except in compliance with the License.
+ *	You may obtain a copy of the License at
+ *	
+ *		http://www.apache.org/licenses/LICENSE-2.0
+ *	
+ *	Unless required by applicable law or agreed to in writing, software
+ *	distributed under the License is distributed on an "AS IS" BASIS,
+ *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *	See the License for the specific language governing permissions and
+ *	limitations under the License.
+ *	----------------------------------------------------------------------------
+ */
+ 
+@import 'reset.less';
+@import 'mixins.less';
+
+//
+//	Grid, screen & container variables
+//	----------------------------------------------------------------------------
+@grid-columns:				12;
+@grid-gutter-width:			60px;
+
+@screen-xs:					0;
+@screen-sm:					768px;
+@screen-md:					992px;
+
+@container-max-width:		990px;
+
+//
+//	Color variables
+//	----------------------------------------------------------------------------
+@body-bg-color:				#fff;
+@block-bg-color:			#f3f3f3;
+@border-color:				#eee;
+@input-border-color:		#ccc;
+@meta-text-color:			#999;
+@text-color:				#222;
+
+@accent-color:				#29b6f6;
+@alt-accent-color:			#0993d2;
+
+//
+//	Typography variables
+//	----------------------------------------------------------------------------
+@code-font:					'Inconsolata', monospace;
+@heading-font:				'Playfair Display', Serif;
+@icon-font:					'Fontawesome';
+@text-font:					'Muli', Sans-serif;
+
+@base-font-size:			18px;
+@base-line-height:			30px;
+@h2-font-size:				@base-font-size * 1.5;
+@h3-font-size:				@base-font-size * 1.25;
+@h4-font-size:				@base-font-size * 1.125;
+@small-font-size:			12px;
+@smaller-font-size:			16px;
+
+@h1-font-size:				@base-font-size * 1.778;
+@h1-line-height:			1.25;
+@h1-margin-bottom:			@base-line-height * 2 - @h1-font-size * @h1-line-height;
+
+//
+//	Form element variables
+//	----------------------------------------------------------------------------
+@input-border-radius:		3px;
+@input-border-width:		1px;
+@input-height:				@base-line-height * 1.5;
+@input-margin-bottom:		@base-line-height * 2 - @input-height;
+@input-padding:				( @input-height / 2 - @base-line-height / 2 - @input-border-width ) 1em;
+
+@button-border-width:		2px;
+@button-padding:			( @input-height / 2 - @base-line-height / 2 - @button-border-width ) 1em;
+
+//
+//	Layout styles
+//	----------------------------------------------------------------------------
+.clr {
+	.clearfix();
+}
+
+.container {
+	margin: 0 auto;
+	max-width: @container-max-width * 2 / 3;
+	
+	@media( min-width: @screen-md ) {
+		max-width: @container-max-width;
+	}
+}
+
+.row {
+	.make-row( @grid-gutter-width );
+}
+
+@media( min-width: @screen-xs ) {
+	.generate-columns( @grid-columns, @grid-gutter-width, xs );
+}
+
+@media( min-width: @screen-sm ) {
+	.generate-columns( @grid-columns, @grid-gutter-width, sm );
+}
+
+@media( min-width: @screen-md ) {
+	.generate-columns( @grid-columns, @grid-gutter-width, md );
+}
+
+.hide {
+	display: none;
+}
+
+.show-sm {
+	.hide;
+	
+	@media( min-width: @screen-sm ) {
+		display: block;
+	}
+}
+
+.show-md {
+	.hide;
+	
+	@media( min-width: @screen-md ) {
+		display: block;
+	}
+}
+
+.show {
+	display: block;
+}
+
+.hide-sm {
+	.show;
+	
+	@media( min-width: @screen-sm ) {
+		display: none;
+	}
+}
+
+.hide-md {
+	@media( min-width: @screen-md ) {
+		display: none;
+	}
+}
+
+//
+//	Common class styles
+//	----------------------------------------------------------------------------
+.aligncenter {
+	display: block;
+	margin: 0 autol;
+}
+
+.alignleft {
+	display: inline;
+	float: left;
+	margin: 0 @base-line-height @base-line-height 0;
+}
+
+.alignright {
+	display: inline;
+	float: right;
+	margin: 0 0 @base-line-height @base-line-height;
+}
+
+.block {
+	background-color: @block-bg-color;
+	margin-bottom: @base-line-height;
+	padding: @base-line-height;
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.button {
+	.rounded( @input-border-radius );
+	background-color: @accent-color;
+	border: solid @button-border-width @accent-color;
+	color: white;
+	display: inline-block;
+	padding: @button-padding;
+	
+	&:hover {
+		background-color: @alt-accent-color;
+		border-color: @alt-accent-color;
+	}
+}
+
+.light-on-dark {
+	color: white;
+	
+	.button {
+		background-color: transparent;
+		border-color: white;
+		
+		&:hover {
+			background-color: white;
+			border-color: white;
+			color: @accent-color;
+		}
+	}
+	
+	input {
+		background-color: fadeout( white, 0.7 );
+		border-color: fadeout( white, 0.7 );
+		
+		&[type=submit] {
+			background-color: transparent;
+			border-color: white;
+			
+			&:hover {
+				background-color: white;
+				color: @accent-color;
+			}
+		}
+	}
+}
+
+.gallery {
+	.block;
+	.make-row( @grid-gutter-width );
+	
+	.gallery-caption {
+		.screen-reader-text;
+	}
+}
+	
+.gallery-item {
+	display: inline;
+	float: left;
+	padding: ( @base-line-height / 2 ) ( @grid-gutter-width / 2 );
+	width: 100%;
+	
+	img {
+		.aligncenter;
+	}
+	
+	@media( min-width: @screen-sm ) {
+		width: 50%;
+	}
+	
+	.full-width & {
+		@media( min-width: @screen-md ) {
+			width: 33.334%;
+		}
+	}
+}
+
+.post-password-form {
+	.block;
+	background-color: @block-bg-color;
+	padding: @base-line-height;
+	
+	p:first-child {
+		margin-bottom: @base-line-height;
+	}
+}
+
+.wp-caption {
+	.block;
+	background-color: @block-bg-color;
+	padding: @base-line-height;
+	text-align: center;
+
+	img {
+		.aligncenter;
+	}
+	
+	.wp-caption-text {
+		font-size: @small-font-size;
+		font-style: italic;
+	}
+}
+//
+//	Common element styles
+//	----------------------------------------------------------------------------
+body {
+	background-color: @body-bg-color;
+}
+
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+hr {
+	border: 0;
+	border-bottom: solid 1px @border-color;
+}
+
+//
+//	Typographic styles
+//	----------------------------------------------------------------------------
+body, input, select, textarea {
+	color: @text-color;
+	font-family: @text-font;
+	font-size: @base-font-size;
+	line-height: @base-line-height;
+}
+
+a {
+	.animate();
+	border-bottom: solid 1px @accent-color;
+	color: @accent-color;
+	text-decoration: none;
+	
+	&:hover {
+		border-bottom-color: @alt-accent-color;
+		color: @alt-accent-color;
+	}
+}
+
+address, blockquote, hr, ol, p, pre, ul {
+	margin-bottom: @base-line-height;
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+
+.note, blockquote, pre {
+	.block;
+}
+
+code, pre {
+	font-family: @code-font;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: @heading-font;
+	font-weight: bold;
+	margin-bottom: @base-line-height / 2;
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+h1, h2 {
+	a {
+		border: 0;
+		color: @text-color;
+		
+		&:hover {
+			color: @accent-color;
+		}
+	}
+}
+
+h1 {
+	font-size: @h1-font-size;
+	line-height: @h1-line-height;
+	margin-bottom: @h1-margin-bottom;
+}
+
+h2 {
+	font-size: @h2-font-size;
+}
+
+h3 {
+	font-size: @h3-font-size;
+}
+
+h4, h5, h6 {
+	font-size: @h4-font-size;
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: bold;
+}
+
+//
+//	Form element styles
+//	----------------------------------------------------------------------------
+form p {
+	margin-bottom: 0;
+}
+
+input, select, textarea {
+	.rounded( @input-border-radius );
+	border: solid @input-border-width @input-border-color;
+	display: inline-block;
+	margin-bottom: @input-margin-bottom;
+	padding: @input-padding;
+	width: 100%;
+}
+
+input[type=submit] {
+	.animate();
+	background-color: @accent-color;
+	border: solid @button-border-width @accent-color;
+	color: white;
+	cursor: pointer;
+	font-family: @heading-font;
+	font-size: @small-font-size;
+	font-weight: bold;
+	letter-spacing: 2px;
+	margin-bottom: 0;
+	padding: @button-padding;
+	text-transform: uppercase;
+	width: auto;
+	
+	&:hover {
+		background-color: @alt-accent-color;
+		border-color: @alt-accent-color;
+	}
+}
+
+textarea {
+	height: @input-height * 3;
+}
+
+//
+//	Site header styles
+//	----------------------------------------------------------------------------
+#site-header {
+	border-bottom: solid 1px @border-color;
+	position: relative;
+	
+	a {
+		border: 0;
+	}
+}
+
+#brand {
+	line-height: @base-line-height * 3;
+	text-transform: uppercase;
+	
+	img {
+		display: block;
+		float: left;
+	}
+}
+
+#nav-menu {
+	.toggle {
+		background-color: @accent-color;
+		color: white;
+		display: block;
+		height: @input-height;
+		line-height: @input-height;
+		padding: 0;
+		position: absolute;
+		right: @grid-gutter-width / 2;
+		text-align: center;
+		top: 0;
+		width: @input-height;
+		
+		@media( min-width: @screen-md ) {
+			display: none;
+		}
+	}
+	
+	.menu {
+		display: none;
+		font-size: @smaller-font-size;
+		
+		@media( min-width: @screen-md ) {
+			display: block;
+			padding-top: ( @base-line-height * 3 - @base-line-height * 2 ) / 2;
+			text-align: right;
+		}
+	}
+	
+	li {
+		border-top: dotted 1px @border-color;
+		
+		@media( min-width: @screen-md ) {
+			border: 0;
+			display: inline;
+			margin-left: @grid-gutter-width / 3;
+		}
+	}
+	
+	a {
+		display: inline-block;
+		padding: ( @base-line-height / 2 ) 0;
+		width: 100%;
+		
+		@media( min-width: @screen-md ) {
+			width: auto;
+		}
+	}
+	
+	.current-menu-item, .current_page_item {
+		& > a {
+			color: @text-color;
+			cursor: text;
+		}
+	}
+}
+
+//
+//	Site footer styles
+//	----------------------------------------------------------------------------
+#site-footer {
+	border-top: solid 1px @border-color;
+	font-size: @smaller-font-size;
+	padding: @base-line-height 0;
+	text-align: center;
+	
+	span {
+		.separate( '/', 10px );
+	}
+}
+
+//
+//	Main styles
+//	----------------------------------------------------------------------------
+.hentry {
+	border-bottom: solid 1px @border-color;
+	padding: ( @base-line-height * 1.5 ) 0;
+	
+	&:last-child {
+		border-bottom: 0;
+	}
+}
+
+.entry-header {
+	margin-bottom: @base-line-height;
+	text-align: center;
+	
+	.entry-category {
+		font-size: @small-font-size;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+	}
+
+	.entry-title {
+		margin-bottom: 0;
+		padding: ( @h1-line-height / 2 ) 0;
+	}
+	
+	.entry-meta {
+		font-size: @smaller-font-size;
+		
+		span {
+			.separate( '/', 5px );
+		}
+		
+		a {
+			border: 0;
+			color: @text-color;
+			
+			&:hover {
+				color: @accent-color;
+			}
+		}
+	}
+}
+
+.entry-thumbnail {
+	margin-bottom: @base-line-height;
+	
+	a {
+		border: 0;
+	}
+}
+
+.entry-content {
+	ol, ul {
+		margin-left: @base-line-height;
+	}
+	
+	ol {
+		list-style: decimal;
+	}
+	
+	ul {
+		list-style: disc;
+	}
+}
+
+.entry-comments {
+	padding: ( @base-line-height * 1.5 ) 0;
+}
+
+.comment {
+	border-bottom: dotted 1px @border-color;
+	margin-bottom: @base-line-height;
+	padding-bottom: @base-line-height;
+	
+	.children & {
+		border-bottom: 0;
+		border-top: dotted 1px @border-color;
+		margin-bottom: 0;
+		margin-left: @base-line-height;
+		margin-top: @base-line-height;
+		padding-bottom: 0;
+		padding-top: @base-line-height;
+	}
+}
+
+.comment-meta {
+	.clearfix();
+	margin-bottom: @base-line-height / 2;
+	
+	.avatar {
+		float: left;
+		margin-right: 10px;
+	}
+	
+	.comment-metadata {
+		color: @meta-text-color;
+		font-size: @small-font-size;
+		
+		a {
+			border: 0;
+			color: @meta-text-color;
+			cursor: text;
+		}
+	}
+}
+
+.comment-respond {
+	.block;
+	
+	.comment & {
+		margin-top: @base-line-height;
+	}
+}
+
+.comment-reply-title {
+	small {
+		float: right;
+		font-family: @text-font;
+		font-size: @base-font-size;
+		font-weight: normal;
+	}
+}
+
+.logged-in-as {
+	margin-bottom: @base-line-height / 2;
+}
+
+//
+//	Page header styles
+//	----------------------------------------------------------------------------
+#page-header {
+	h1 {
+		border-bottom: dotted 1px @border-color;
+		font-size: @h2-font-size;
+		padding: ( @base-line-height * 1.5 ) 0;
+		text-align: center;
+	}
+}
+
+//
+//	No results styles
+//	----------------------------------------------------------------------------
+.no-results {
+	padding: ( @base-line-height * 1.5 ) 0;
+
+	header {
+		margin-bottom: @base-line-height;
+		text-align: center;
+	}
+	
+	.search-form {
+		.block;
+	}
+}
+
+//
+//	Pagination styles
+//	----------------------------------------------------------------------------
+.pagination {
+	padding: @base-line-height 0;
+	text-align: center;
+	
+	.page-numbers {
+		.rounded( @input-border-radius );
+		background-color: @block-bg-color;
+		display: inline-block;
+		height: @input-height;
+		line-height: @input-height;
+		text-align: center;
+		width: @input-height;
+	}
+	
+	a {
+		border: 0;
+		
+		&:hover {
+			background-color: @border-color;
+		}
+	}
+}
+
+//
+//	Sidebar styles
+//	----------------------------------------------------------------------------
+#sidebar {
+	border-top: solid 1px @border-color;
+	
+	@media( min-width: @screen-md ) {
+		border-top: 0;
+	}
+	
+	.widget {
+		border-bottom: solid 1px @border-color;
+		padding: ( @base-line-height * 1.5 ) 0;
+		
+		&:last-child {
+			border-bottom: 0;
+		}
+		
+		&.highlight {
+			.text-widget {
+				&:extend( .light-on-dark );
+				background-color: @accent-color;
+				padding: @base-line-height;
+				text-align: center;
+			}
+		}
+	}
+	
+	.widget-title, li, .text-widget {
+		border-bottom: dotted 1px @border-color;
+		margin-bottom: @base-line-height / 2;
+		padding-bottom: @base-line-height / 2;
+		
+		
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+	
+	.search-form {
+		input {
+			margin-bottom: 0;
+			
+			&[type=submit] {
+				display: none;
+			}
+		}
+	}
+}
+
+//
+//	Hero widget styles
+//	----------------------------------------------------------------------------
+#hero-widgets {
+	.widget {
+		.container {
+			padding: ( @base-line-height * 1.5 ) ( @grid-gutter-width / 2 );
+		}
+		
+		&:nth-child( even ) {
+			background-color: @border-color;
+		}
+		
+		&:nth-child( odd ) {
+			border-bottom: solid 1px @border-color;
+		}
+		
+		&:first-child {
+			&:extend( .light-on-dark );
+			background-color: @accent-color;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			
+			.container {
+				padding: ( @base-line-height * 2 ) ( @grid-gutter-width / 2 );
+			}
+		}
+	}
+}
+
+//
+//	Footer widget styles
+//	----------------------------------------------------------------------------
+#footer-widgets {
+	&:extend( .light-on-dark );
+	
+	.widget {
+		.container {
+			padding: ( @base-line-height * 1.5 ) ( @grid-gutter-width / 2 );
+		}
+		
+		&:nth-child( even ) {
+			background-color: @text-color;
+		}
+		
+		&:nth-child( odd ) {
+			background-color: @accent-color;
+		}
+	}
+}
+
+//
+//	After post widget styles
+//	----------------------------------------------------------------------------
+#after-post-widgets {
+	padding: ( @base-line-height * 1.5 ) 0;
+	
+	.widget {
+		&:extend( .light-on-dark );
+		background-color: @accent-color;
+		padding: @base-line-height * 1.5;
+		text-align: center;
+	}
+}
+
+//
+//	Contact form 7
+//	----------------------------------------------------------------------------
+.wpcf7 {
+	.block;
+	
+	.ajax-loader {
+		margin-left: 10px;
+	}
+}
+
+.screen-reader-response, .wpcf7-not-valid-tip {
+	&:extend( .screen-reader-text );
+}
+
+.wpcf7-response-output {
+	display: none;
+	margin-top: @base-line-height;
+}
+
+.wpcf7-display-none {
+	display-none: none;
+}
+
+.wpcf7-not-valid {
+	border-color: red;
+}
